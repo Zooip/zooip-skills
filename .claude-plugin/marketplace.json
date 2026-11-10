@@ -1,0 +1,8 @@
+{
+  "name": "zooip",
+  "owner": { "name": "Zooip", "url": "https://github.com/Zooip" },
+  "description": "Zooip's agent skills.",
+  "plugins": [
+    { "name": "pre-project", "source": "./", "description": "Pre-project skills: take a project from a loose need to agent-ready tickets in four phases (preliminary study, exploration, architecture, breakdown), with a visual grilling board. Tracker- and docs-agnostic.", "category": "engineering" }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "pre-project",
+  "version": "0.1.0",
+  "description": "Pre-project skills: take a project from a loose need to agent-ready tickets in four phases (preliminary study, exploration, architecture, breakdown), with a visual grilling board. Tracker- and docs-agnostic.",
+  "author": { "name": "Zooip", "url": "https://github.com/Zooip" },
+  "repository": "https://github.com/Zooip/zooip-skills",
+  "license": "MIT",
+  "keywords": ["pre-project", "spec", "architecture", "tickets", "grilling"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Pre-project",
+    "shortDescription": "From a loose need to agent-ready tickets, in four documented phases",
+    "developerName": "Zooip",
+    "category": "Developer Tools"
+  }
+}

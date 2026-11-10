@@ -1,0 +1,190 @@
+<title>{{Subject}} — grill</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Board of a grilling session. Replace every {{…}}, translate the labels into the session's language, repeat the .question block per question.
+   Option A/B colours mark the options of one question; keep them consistent in the diagrams' classDef. */
+:root {
+  --bg: #f6f7f9; --surface: #ffffff; --ink: #1b2230; --muted: #5d6677; --line: #dde1e8;
+  --accent: #2f5bd3; --code-bg: #eef1f5;
+  --opt-a: #2f6f8f; --opt-a-bg: #e5f0f5; --opt-b: #a8620f; --opt-b-bg: #fbefdc;
+  --pivot: #b4442c; --pivot-bg: #fbe9e4; --setting: #4d6b2f; --setting-bg: #eaf2df;
+  --f-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --f-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #12161d; --surface: #1a1f28; --ink: #e5e9f0; --muted: #9aa3b2; --line: #2c3340;
+    --accent: #7d9cf0; --code-bg: #20262f;
+    --opt-a: #7fbfdc; --opt-a-bg: #1b2d36; --opt-b: #e9a957; --opt-b-bg: #33261a;
+    --pivot: #f08b72; --pivot-bg: #3a221c; --setting: #a9cf7c; --setting-bg: #232f1a;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #12161d; --surface: #1a1f28; --ink: #e5e9f0; --muted: #9aa3b2; --line: #2c3340;
+  --accent: #7d9cf0; --code-bg: #20262f;
+  --opt-a: #7fbfdc; --opt-a-bg: #1b2d36; --opt-b: #e9a957; --opt-b-bg: #33261a;
+  --pivot: #f08b72; --pivot-bg: #3a221c; --setting: #a9cf7c; --setting-bg: #232f1a;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font: 15px/1.6 var(--f-body); margin: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 1040px; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 48px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; line-height: 1.2; margin: 0; }
+h1 { font-size: 2rem; } h2 { font-size: 1.35rem; } h3 { font-size: 1.05rem; }
+p { margin: 0; max-width: 70ch; }
+section, .question { display: grid; gap: 16px; }
+.eyebrow { font: 500 0.75rem/1 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+code { font: 0.88em var(--f-mono); background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+.question { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px; }
+.options { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+/* Wide diagrams (sequenceDiagram, flowchart LR) take the full width, one option under the other. */
+.options.stacked { grid-template-columns: 1fr; }
+.answer { display: grid; gap: 10px; border-top: 1px solid var(--line); padding-top: 14px; }
+.answer[hidden] { display: none; }
+.answer label { display: flex; gap: 8px; align-items: baseline; cursor: pointer; }
+.answer textarea { font: inherit; color: inherit; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 8px; min-height: 64px; width: 100%; }
+.answer button { justify-self: start; font: 500 0.9rem var(--f-body); color: #fff; background: var(--accent); border: 0; border-radius: 6px; padding: 7px 14px; cursor: pointer; }
+.answer button:focus-visible, .answer input:focus-visible, .answer textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.answer .saved { font-size: 0.85rem; color: var(--setting); }
+.answer-hint { font-size: 0.9rem; color: var(--muted); }
+.option { display: grid; gap: 10px; align-content: start; border-radius: 8px; padding: 14px; overflow-x: auto; }
+.option.a { background: var(--opt-a-bg); } .option.a h3 { color: var(--opt-a); }
+.option.b { background: var(--opt-b-bg); } .option.b h3 { color: var(--opt-b); }
+.reco { border-left: 3px solid var(--accent); padding-left: 12px; }
+.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 500 0.74rem/1.3 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+tr:last-child td { border-bottom: 0; }
+.tag { font-size: 0.78rem; font-weight: 500; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
+.tag.pivot { background: var(--pivot-bg); color: var(--pivot); }
+.tag.setting { background: var(--setting-bg); color: var(--setting); }
+.facts { font-size: 0.9rem; color: var(--muted); }
+</style>
+
+<main>
+  <header style="display:grid;gap:10px">
+    <span class="eyebrow">{{Project}} · grill · round {{N}}</span>
+    <h1>{{Subject}}</h1>
+    <p>{{One sentence: what this session decides.}}</p>
+  </header>
+
+  <section>
+    <span class="eyebrow">Decisions</span>
+    <div class="table-wrap"><table>
+      <thead><tr><th>#</th><th>Decision</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>{{Q1}}</td><td>{{decision}}</td><td>{{reason}}</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Round {{N}}</span>
+    <p class="answer-hint" id="answer-hint">Answer in the terminal.</p>
+
+    <article class="question">
+      <h2>{{Qn — question title}}</h2>
+      <p>{{The question, worded so that "yes" accepts the recommendation.}}</p>
+      <div class="options">
+        <div class="option a">
+          <h3>{{Option A}}</h3>
+<pre class="mermaid">
+{{diagram A}}
+</pre>
+        </div>
+        <div class="option b">
+          <h3>{{Option B}}</h3>
+<pre class="mermaid">
+{{diagram B}}
+</pre>
+        </div>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th></th><th>{{Option A}}</th><th>{{Option B}}</th></tr></thead>
+        <tbody>
+          <tr><td>Makes easy</td><td>{{…}}</td><td>{{…}}</td></tr>
+          <tr><td>Makes hard</td><td>{{…}}</td><td>{{…}}</td></tr>
+          <tr><td>Cost</td><td>{{…}}</td><td>{{…}}</td></tr>
+        </tbody>
+      </table></div>
+      <p class="facts">{{Facts found in the code, with <code>file:line</code>.}}</p>
+      <p class="reco"><strong>Recommendation:</strong> {{recommendation and why}}</p>
+      <!-- One radio per option; the first one is the recommendation. data-q is the question number. -->
+      <form class="answer" data-q="{{Qn}}" hidden>
+        <label><input type="radio" name="{{Qn}}-choice" value="{{Option A}}"> Oui, {{Option A}} (recommended)</label>
+        <label><input type="radio" name="{{Qn}}-choice" value="{{Option B}}"> {{Option B}}</label>
+        <label><input type="radio" name="{{Qn}}-choice" value="other"> Other</label>
+        <textarea id="{{Qn}}-note" name="note" placeholder="Detail, reservation, another option…"></textarea>
+        <button type="submit">Save my answer</button>
+        <span class="saved" aria-live="polite"></span>
+      </form>
+    </article>
+  </section>
+
+  <section>
+    <span class="eyebrow">Pending</span>
+    <div class="table-wrap"><table>
+      <thead><tr><th>#</th><th>Type</th><th>Working hypothesis</th><th>Who answers</th><th>Where it lands</th></tr></thead>
+      <tbody>
+        <tr><td>{{Qx}}</td><td><span class="tag setting">setting</span></td><td>{{…}}</td><td>{{…}}</td><td>{{…}}</td></tr>
+        <tr><td>{{Qy}}</td><td><span class="tag pivot">pivot</span></td><td>{{…}}</td><td>{{…}}</td><td>{{…}}</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Withdrawn</span>
+    <div class="table-wrap"><table>
+      <thead><tr><th>#</th><th>Withdrawn recommendation</th><th>The fact that contradicted it</th></tr></thead>
+      <tbody>
+        <tr><td>{{Qz}}</td><td>{{…}}</td><td>{{…}}</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+</main>
+
+<script>
+// Answers go to the artifact's db (collection "answers", one doc per question) for the agent to read.
+// Without db (local file, signed out), the forms stay hidden and the user answers in the terminal.
+const ROUND = {{N}};
+(async () => {
+  const db = window.claude ? await window.claude.use("db") : null;
+  if (!db) return;
+  document.getElementById("answer-hint").textContent =
+    "Answer here, then say so in the terminal. You can also answer in the terminal.";
+  for (const form of document.querySelectorAll("form.answer")) {
+    const q = form.dataset.q;
+    const saved = form.querySelector(".saved");
+    form.hidden = false;
+    db.doc("answers/" + q).get().then(snap => {
+      if (!snap.exists) return;
+      const a = snap.data();
+      const radio = form.querySelector(`input[value="${CSS.escape(a.choice || "")}"]`);
+      if (radio) radio.checked = true;
+      form.note.value = a.note || "";
+      saved.textContent = "Answer saved.";
+    }).catch(() => {});
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+      const choice = form.querySelector("input[type=radio]:checked")?.value || null;
+      const note = form.note.value.trim();
+      if (!choice && !note) { saved.textContent = "Pick an option or write a detail."; return; }
+      saved.textContent = "Saving…";
+      try {
+        await db.doc("answers/" + q).set({ question: q, round: ROUND, choice, note, answeredAt: new Date().toISOString() });
+        saved.textContent = "Answer saved.";
+      } catch (error) {
+        saved.textContent = "Could not save: answer in the terminal.";
+      }
+    });
+  }
+})();
+</script>

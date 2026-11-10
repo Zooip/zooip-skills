@@ -1,0 +1,12 @@
+{
+  "name": "zooip",
+  "interface": { "displayName": "Zooip" },
+  "plugins": [
+    {
+      "name": "pre-project",
+      "source": { "source": "local", "path": "./" },
+      "policy": { "installation": "AVAILABLE" },
+      "category": "Developer Tools"
+    }
+  ]
+}
