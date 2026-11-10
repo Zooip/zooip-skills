@@ -25,7 +25,7 @@ Works with any tracker and documentation system: Linear, Jira with Confluence, G
 - The [mattpocock-skills](https://github.com/mattpocock/skills): the phases build on `grilling`, `codebase-design` and `to-tickets`, and on the configuration `/setup-matt-pocock-skills` writes (issue tracker, glossary).
 - Access to your tracker and documentation system from the agent (an MCP server or a CLI such as `gh`).
 
-Install all the skills together: the phase skills read shared conventions from `skills/pre-project/references/`.
+Install all the skills together: the phase skills read shared conventions from `skills/pre-project/references/`. Neither rulesync nor the plugins resolve the mattpocock-skills for you: every skill checks they are there before it starts, and names the line that installs them if one is missing.
 
 ## Install
 
@@ -45,7 +45,7 @@ codex plugin marketplace add Zooip/zooip-skills
 codex plugin add pre-project
 ```
 
-The mattpocock-skills ship no Codex manifest: install them through rulesync, or copy them into your skills folder.
+The mattpocock-skills have no Codex plugin manifest (each skill carries its own `agents/openai.yaml`): install them through rulesync, or copy their folders next to these skills.
 
 ### rulesync
 

@@ -15,7 +15,9 @@ The issue tracker and the glossary stay with `setup-matt-pocock-skills`. This is
 
 ### 1. Explore
 
-Read whatever exists; don't assume:
+First check the dependencies listed in [../pre-project/references/conventions.md](../pre-project/references/conventions.md) (section « Dependencies »), and stop there if one is missing.
+
+Then read whatever exists; don't assume:
 
 - `docs/agents/`: `issue-tracker.md`, `triage-labels.md`, `domain.md`, a previous `project-docs.md`;
 - the `## Agent skills` block in `CLAUDE.md` or `AGENTS.md`;

@@ -2,6 +2,14 @@
 
 Shared by every phase skill: `preliminary-study`, `exploration`, `architecture`, `breakdown`. Each one points here; nothing below is repeated in them.
 
+## Dependencies
+
+The phases build on four skills from [mattpocock-skills](https://github.com/mattpocock/skills): `grilling`, `codebase-design`, `to-tickets` and `setup-matt-pocock-skills`. Check that each one is in your available skills before anything else. If one is missing, stop and tell the user which, with the line that installs it for the way they installed these skills:
+
+- Claude Code plugin: `/plugin marketplace add mattpocock/skills`, then `/plugin install mattpocock-skills@mattpocock`;
+- rulesync: add `{ "source": "mattpocock/skills", "path": "skills/engineering", "skills": ["codebase-design", "to-tickets", "setup-matt-pocock-skills"] }` and `{ "source": "mattpocock/skills", "path": "skills/productivity", "skills": ["grilling"] }` to `sources` in `rulesync.jsonc`, then run `rulesync install && rulesync generate`;
+- anything else (a Codex plugin, a copy): install them through rulesync, or copy their folders next to these skills.
+
 ## Configuration
 
 The repo's configuration should have been provided to you, in `docs/agents/` (summarised in the `## Agent skills` block of `CLAUDE.md` or `AGENTS.md`):

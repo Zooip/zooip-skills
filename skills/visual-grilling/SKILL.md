@@ -3,7 +3,7 @@ name: visual-grilling
 description: Grilling with diagrams — each round of the interview is also rendered as a page where every structural decision shows one diagram per option. Use when grilling a design whose choices shape the architecture (data model, ownership of a write, a seam, a lifecycle), or when the user asks for schemas or a visual grill.
 ---
 
-Visual grilling is `grilling` with a second surface. The interview runs exactly as `grilling` defines it: invoke that skill for the round mechanics (design tree, frontier, numbered questions with a recommendation, facts found rather than asked). This skill adds the **board**: one page, republished every round, where the decisions that shape the architecture are seen rather than read.
+Visual grilling is `grilling` with a second surface. The interview runs exactly as `grilling` defines it: invoke that skill for the round mechanics (design tree, frontier, numbered questions with a recommendation, facts found rather than asked). If `grilling` is not in your available skills, tell the user to install it from [mattpocock-skills](https://github.com/mattpocock/skills) and stop. This skill adds the **board**: one page, republished every round, where the decisions that shape the architecture are seen rather than read.
 
 ## Which questions get a diagram
 
