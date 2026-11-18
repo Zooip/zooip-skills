@@ -10,6 +10,12 @@ The phases build on four skills from [mattpocock-skills](https://github.com/matt
 - rulesync: add `{ "source": "mattpocock/skills", "path": "skills/engineering", "skills": ["codebase-design", "to-tickets", "setup-matt-pocock-skills"] }` and `{ "source": "mattpocock/skills", "path": "skills/productivity", "skills": ["grilling"] }` to `sources` in `rulesync.jsonc`, then run `rulesync install && rulesync generate`;
 - anything else (a Codex plugin, a copy): install them through rulesync, or copy their folders next to these skills.
 
+The exploration phase also needs `visual-grilling`, from the `visual-grilling` plugin of this marketplace. Check it the same way; if it is missing, give the line for the way the user installed the pre-project:
+
+- Claude Code plugin: `/plugin install visual-grilling@zooip`;
+- Codex plugin: `codex plugin add visual-grilling`;
+- rulesync: add `{ "source": "Zooip/zooip-skills", "path": "plugins/visual-grilling/skills" }` to `sources` in `rulesync.jsonc`, then run `rulesync install && rulesync generate`.
+
 ## Configuration
 
 The repo's configuration should have been provided to you, in `docs/agents/` (summarised in the `## Agent skills` block of `CLAUDE.md` or `AGENTS.md`):

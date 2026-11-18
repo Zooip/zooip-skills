@@ -1,6 +1,14 @@
 # zooip-skills
 
-Agent skills for Claude Code, Codex and any tool [rulesync](https://github.com/dyoshikawa/rulesync) generates for.
+Agent skills for Claude Code, Codex and any tool [rulesync](https://github.com/dyoshikawa/rulesync) generates for, split into plugins you install separately:
+
+| Plugin | Skills | Needs |
+| -- | -- | -- |
+| [`pre-project`](#pre-project) | `setup-pre-project`, `pre-project`, `preliminary-study`, `exploration`, `architecture`, `breakdown` | `visual-grilling`, mattpocock-skills |
+| [`visual-grilling`](#visual-grilling) | `visual-grilling` | mattpocock-skills (`grilling`) |
+| [`github-app`](#github-app) | `setup-github-app` | `gh` |
+
+Each plugin lives in `plugins/<plugin>/`, with its skills in `plugins/<plugin>/skills/`.
 
 ## Pre-project
 
@@ -14,7 +22,6 @@ Take a project from a loose need to tickets an agent can grab, in four phases. E
 | `/exploration` | Phase 2: widen the field of solutions, then converge through a visual grilling session |
 | `/architecture` | Phase 3: modules, interfaces, stable technical names, blast radius, for peer review |
 | `/breakdown` | Phase 4: tracer-bullet tickets, with open questions carried as provisional rules |
-| `visual-grilling` | A grilling session with a board page: one diagram per option on structural questions, and answers on the page when the agent can publish Claude Artifacts |
 
 An open question never stalls the pre-project unless its answer would change the direction (a **pivot**). Any other question (a **setting**) proceeds on a working hypothesis, recorded with who answers it and where the answer will land.
 
@@ -22,50 +29,74 @@ Works with any tracker and documentation system: Linear, Jira with Confluence, G
 
 ### Requirements
 
+- The `visual-grilling` plugin: `/exploration` runs its convergence through it.
 - The [mattpocock-skills](https://github.com/mattpocock/skills): the phases build on `grilling`, `codebase-design` and `to-tickets`, and on the configuration `/setup-matt-pocock-skills` writes (issue tracker, glossary).
 - Access to your tracker and documentation system from the agent (an MCP server or a CLI such as `gh`).
 
-Install all the skills together: the phase skills read shared conventions from `skills/pre-project/references/`. Neither rulesync nor the plugins resolve the mattpocock-skills for you: every skill checks they are there before it starts, and names the line that installs them if one is missing.
+Install all the pre-project skills together: the phase skills read shared conventions from `plugins/pre-project/skills/pre-project/references/`. Neither rulesync nor the plugins resolve dependencies for you: every skill checks they are there before it starts, and names the line that installs them if one is missing.
+
+### Then
+
+1. Run `/setup-matt-pocock-skills` if the repo has no `docs/agents/issue-tracker.md`.
+2. Run `/setup-pre-project`.
+3. Run `/pre-project <your project>` and follow the phase it names.
+
+## Visual grilling
+
+A grilling session with a board page: one diagram per option on structural questions, and answers on the page when the agent can publish Claude Artifacts. Usable on its own, on any design whose choices shape the architecture. It runs the rounds through `grilling` from the mattpocock-skills.
+
+## GitHub App
+
+`/setup-github-app` creates or reuses a GitHub App as the bot identity coding agents use to open and maintain PRs, configures [gh-app-auth](https://github.com/AmadeusITGroup/gh-app-auth) and verifies each installation. SSH pushes and commit identity stay untouched.
 
 ## Install
 
-### Claude Code plugin
+### Claude Code plugins
 
 ```
 /plugin marketplace add Zooip/zooip-skills
 /plugin install pre-project@zooip
+/plugin install visual-grilling@zooip
+/plugin install github-app@zooip
 ```
 
-Install the mattpocock-skills plugin the same way if you don't have it.
+Install only the plugins you need, and the mattpocock-skills plugin the same way if you don't have it.
 
-### Codex plugin
+### Codex plugins
 
 ```bash
 codex plugin marketplace add Zooip/zooip-skills
 codex plugin add pre-project
+codex plugin add visual-grilling
+codex plugin add github-app
 ```
 
 The mattpocock-skills have no Codex plugin manifest (each skill carries its own `agents/openai.yaml`): install them through rulesync, or copy their folders next to these skills.
 
 ### rulesync
 
-Add the sources to `rulesync.jsonc`, then run `rulesync install && rulesync generate`:
+rulesync has no plugins: add one source per plugin you want to `rulesync.jsonc`, then run `rulesync install && rulesync generate`. For the pre-project and its dependencies:
 
 ```jsonc
 {
   "sources": [
-    { "source": "Zooip/zooip-skills", "path": "skills" },
+    { "source": "Zooip/zooip-skills", "path": "plugins/pre-project/skills" },
+    { "source": "Zooip/zooip-skills", "path": "plugins/visual-grilling/skills" },
     { "source": "mattpocock/skills", "path": "skills/engineering", "skills": ["codebase-design", "to-tickets", "setup-matt-pocock-skills"] },
     { "source": "mattpocock/skills", "path": "skills/productivity", "skills": ["grilling"] }
   ]
 }
 ```
 
-## Then
+For the GitHub App setup alone:
 
-1. Run `/setup-matt-pocock-skills` if the repo has no `docs/agents/issue-tracker.md`.
-2. Run `/setup-pre-project`.
-3. Run `/pre-project <your project>` and follow the phase it names.
+```jsonc
+{
+  "sources": [
+    { "source": "Zooip/zooip-skills", "path": "plugins/github-app/skills" }
+  ]
+}
+```
 
 ## License
 

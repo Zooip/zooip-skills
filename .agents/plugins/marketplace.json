@@ -1,11 +1,40 @@
 {
   "name": "zooip",
-  "interface": { "displayName": "Zooip" },
+  "interface": {
+    "displayName": "Zooip"
+  },
   "plugins": [
     {
       "name": "pre-project",
-      "source": { "source": "local", "path": "./" },
-      "policy": { "installation": "AVAILABLE" },
+      "source": {
+        "source": "local",
+        "path": "./plugins/pre-project"
+      },
+      "policy": {
+        "installation": "AVAILABLE"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "visual-grilling",
+      "source": {
+        "source": "local",
+        "path": "./plugins/visual-grilling"
+      },
+      "policy": {
+        "installation": "AVAILABLE"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "github-app",
+      "source": {
+        "source": "local",
+        "path": "./plugins/github-app"
+      },
+      "policy": {
+        "installation": "AVAILABLE"
+      },
       "category": "Developer Tools"
     }
   ]

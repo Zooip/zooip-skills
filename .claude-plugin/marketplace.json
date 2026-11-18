@@ -1,8 +1,28 @@
 {
   "name": "zooip",
-  "owner": { "name": "Zooip", "url": "https://github.com/Zooip" },
+  "owner": {
+    "name": "Zooip",
+    "url": "https://github.com/Zooip"
+  },
   "description": "Zooip's agent skills.",
   "plugins": [
-    { "name": "pre-project", "source": "./", "description": "Pre-project skills: take a project from a loose need to agent-ready tickets in four phases (preliminary study, exploration, architecture, breakdown), with a visual grilling board. Tracker- and docs-agnostic.", "category": "engineering" }
+    {
+      "name": "pre-project",
+      "source": "./plugins/pre-project",
+      "description": "Pre-project skills: take a project from a loose need to agent-ready tickets in four phases (preliminary study, exploration, architecture, breakdown). Tracker- and docs-agnostic. The exploration phase needs the visual-grilling plugin.",
+      "category": "engineering"
+    },
+    {
+      "name": "visual-grilling",
+      "source": "./plugins/visual-grilling",
+      "description": "Grilling with diagrams: each round of the interview is also a board page where every structural decision shows one diagram per option, and the user can answer on the page.",
+      "category": "engineering"
+    },
+    {
+      "name": "github-app",
+      "source": "./plugins/github-app",
+      "description": "Set up a GitHub App as the bot identity coding agents use to open and maintain PRs, authenticated through gh-app-auth.",
+      "category": "engineering"
+    }
   ]
 }

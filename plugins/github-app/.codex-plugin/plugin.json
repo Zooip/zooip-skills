@@ -1,0 +1,24 @@
+{
+  "name": "github-app",
+  "version": "0.1.0",
+  "description": "Set up a GitHub App as the bot identity coding agents use to open and maintain PRs, authenticated through gh-app-auth.",
+  "author": {
+    "name": "Zooip",
+    "url": "https://github.com/Zooip"
+  },
+  "repository": "https://github.com/Zooip/zooip-skills",
+  "license": "MIT",
+  "keywords": [
+    "github",
+    "github-app",
+    "bot",
+    "gh-app-auth"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "GitHub App",
+    "shortDescription": "A GitHub App identity for coding agents, through gh-app-auth",
+    "developerName": "Zooip",
+    "category": "Developer Tools"
+  }
+}

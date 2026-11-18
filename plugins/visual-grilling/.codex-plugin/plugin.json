@@ -1,0 +1,24 @@
+{
+  "name": "visual-grilling",
+  "version": "0.1.0",
+  "description": "Grilling with diagrams: each round of the interview is also a board page where every structural decision shows one diagram per option, and the user can answer on the page.",
+  "author": {
+    "name": "Zooip",
+    "url": "https://github.com/Zooip"
+  },
+  "repository": "https://github.com/Zooip/zooip-skills",
+  "license": "MIT",
+  "keywords": [
+    "grilling",
+    "design",
+    "diagrams",
+    "mermaid"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Visual grilling",
+    "shortDescription": "A grilling session with one diagram per option on structural questions",
+    "developerName": "Zooip",
+    "category": "Developer Tools"
+  }
+}
