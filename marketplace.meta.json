@@ -1,0 +1,20 @@
+{
+  "name": "zooip",
+  "displayName": "Zooip",
+  "description": "Zooip's agent skills.",
+  "owner": {
+    "name": "Zooip",
+    "url": "https://github.com/Zooip"
+  },
+  "repository": "https://github.com/Zooip/zooip-skills",
+  "license": "MIT",
+  "category": {
+    "claude": "engineering",
+    "codex": "Developer Tools"
+  },
+  "plugins": [
+    "pre-project",
+    "visual-grilling",
+    "github-app"
+  ]
+}

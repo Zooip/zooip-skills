@@ -1,0 +1,5 @@
+interface:
+  display_name: "Setup GitHub App"
+  short_description: "A GitHub App identity for coding agents"
+policy:
+  allow_implicit_invocation: false

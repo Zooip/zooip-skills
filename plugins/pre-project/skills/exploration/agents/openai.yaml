@@ -1,0 +1,5 @@
+interface:
+  display_name: "Exploration"
+  short_description: "Phase 2: widen, then converge on decisions"
+policy:
+  allow_implicit_invocation: false

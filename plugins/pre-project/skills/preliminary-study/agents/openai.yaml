@@ -1,0 +1,5 @@
+interface:
+  display_name: "Preliminary Study"
+  short_description: "Phase 1: what the code does today"
+policy:
+  allow_implicit_invocation: false

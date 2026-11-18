@@ -1,0 +1,5 @@
+interface:
+  display_name: "Pre-project"
+  short_description: "Find the next phase of a project"
+policy:
+  allow_implicit_invocation: false

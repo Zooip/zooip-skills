@@ -10,7 +10,7 @@ Read [../pre-project/references/conventions.md](../pre-project/references/conven
 
 ## Process
 
-1. **Load the decisions.** Read the exploration document. Invoke the `codebase-design` skill: its vocabulary (module, interface, seam, adapter, depth, leverage, locality) is the language of this phase and of its document.
+1. **Load the decisions.** Read the exploration document. Call the Skill tool with `codebase-design`: its vocabulary (module, interface, seam, adapter, depth, leverage, locality) is the language of this phase and of its document.
 2. **Read the code the design lands in.** The models, services, entry points and readers the decisions touch, so every interface is drawn against real signatures. Done when each module you propose can name the existing code it wraps or replaces, with `file:line`.
 3. **Draft the modules.** For each one: its interface (signature, invariants, error modes), what it hides, the deletion test, and whether its seam is real (two adapters) or hypothetical (one). Settle the technical names here; they stay fixed from now on.
 4. **Map the blast radius.** Find every reader and writer of the concepts the design changes (search the code, database views and raw queries included), and assign each to the module or entry point it must go through. Readers that must move first become **prefactoring**: a change that leaves behaviour identical and makes the feature an easy change.

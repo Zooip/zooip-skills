@@ -1,0 +1,12 @@
+{
+  "version": "0.1.0",
+  "description": "Grilling with diagrams: each round of the interview is also a board page where every structural decision shows one diagram per option, and the user can answer on the page.",
+  "keywords": [
+    "grilling",
+    "design",
+    "diagrams",
+    "mermaid"
+  ],
+  "displayName": "Visual grilling",
+  "shortDescription": "A grilling session with one diagram per option on structural questions"
+}

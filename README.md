@@ -16,12 +16,12 @@ Take a project from a loose need to tickets an agent can grab, in four phases. E
 
 | Skill | Role |
 | -- | -- |
-| `/setup-pre-project` | Run once per repo: what a project is in your tools, where phase documents live, their language, the triage labels |
-| `/pre-project <project>` | Entry point: finds the current phase of a project and names the next skill |
-| `/preliminary-study` | Phase 1: what the code does today, blockers, traps, the questions the spec leaves open |
-| `/exploration` | Phase 2: widen the field of solutions, then converge through a visual grilling session |
-| `/architecture` | Phase 3: modules, interfaces, stable technical names, blast radius, for peer review |
-| `/breakdown` | Phase 4: tracer-bullet tickets, with open questions carried as provisional rules |
+| [`/setup-pre-project`](plugins/pre-project/skills/setup-pre-project/SKILL.md) | Run once per repo: what a project is in your tools, where phase documents live, their language, the triage labels |
+| [`/pre-project <project>`](plugins/pre-project/skills/pre-project/SKILL.md) | Entry point: finds the current phase of a project and names the next skill |
+| [`/preliminary-study`](plugins/pre-project/skills/preliminary-study/SKILL.md) | Phase 1: what the code does today, blockers, traps, the questions the spec leaves open |
+| [`/exploration`](plugins/pre-project/skills/exploration/SKILL.md) | Phase 2: widen the field of solutions, then converge through a visual grilling session |
+| [`/architecture`](plugins/pre-project/skills/architecture/SKILL.md) | Phase 3: modules, interfaces, stable technical names, blast radius, for peer review |
+| [`/breakdown`](plugins/pre-project/skills/breakdown/SKILL.md) | Phase 4: tracer-bullet tickets, with open questions carried as provisional rules |
 
 An open question never stalls the pre-project unless its answer would change the direction (a **pivot**). Any other question (a **setting**) proceeds on a working hypothesis, recorded with who answers it and where the answer will land.
 
@@ -43,11 +43,11 @@ Install all the pre-project skills together: the phase skills read shared conven
 
 ## Visual grilling
 
-A grilling session with a board page: one diagram per option on structural questions, and answers on the page when the agent can publish Claude Artifacts. Usable on its own, on any design whose choices shape the architecture. It runs the rounds through `grilling` from the mattpocock-skills.
+[`visual-grilling`](plugins/visual-grilling/skills/visual-grilling/SKILL.md) runs a grilling session with a board page: one diagram per option on structural questions, and answers on the page when the agent can publish Claude Artifacts. Usable on its own, on any design whose choices shape the architecture. It runs the rounds through `grilling` from the mattpocock-skills.
 
 ## GitHub App
 
-`/setup-github-app` creates or reuses a GitHub App as the bot identity coding agents use to open and maintain PRs, configures [gh-app-auth](https://github.com/AmadeusITGroup/gh-app-auth) and verifies each installation. SSH pushes and commit identity stay untouched.
+[`/setup-github-app`](plugins/github-app/skills/setup-github-app/SKILL.md) creates or reuses a GitHub App as the bot identity coding agents use to open and maintain PRs, configures [gh-app-auth](https://github.com/AmadeusITGroup/gh-app-auth) and verifies each installation. SSH pushes and commit identity stay untouched.
 
 ## Install
 

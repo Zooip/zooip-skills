@@ -1,0 +1,5 @@
+interface:
+  display_name: "Setup Pre-project"
+  short_description: "Configure a repo for the pre-project"
+policy:
+  allow_implicit_invocation: false
