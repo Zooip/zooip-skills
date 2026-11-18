@@ -51,7 +51,7 @@ Install all the pre-project skills together: the phase skills read shared conven
 
 [`github-agent`](plugins/github-agent/skills/github-agent/SKILL.md) is the skill agents reach for on their own before any `gh` command or GitHub API call: it checks the repository is covered, runs every `gh` command through `gh app-auth exec`, and reports what the bot is refused instead of falling back to your account.
 
-In Claude Code and Codex, the plugin also ships a `PreToolUse` hook that refuses a plain `gh` command on a repository a gh-app-auth route covers, `gh app-auth token` and `gitconfig`, and GitHub MCP tools while a route is configured. Codex asks you to trust the hook the first time. rulesync installs only the skills, without the hook.
+In Claude Code and Codex, the plugin also ships a `PreToolUse` hook, active once a gh-app-auth route is configured. It refuses a plain `gh` command on a covered repository, any command that prints or reroutes credentials (`gh auth token`, `gh app-auth token`, `gitconfig`…), and GitHub MCP tools, whose identity it cannot check. The hook catches the usual mistakes, not a deliberate bypass: a command built at run time (`eval`, a script) escapes it. Codex asks you to trust the hook the first time and after each update. rulesync installs only the skills, without the hook.
 
 ## Install
 

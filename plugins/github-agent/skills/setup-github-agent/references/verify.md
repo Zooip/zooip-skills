@@ -8,16 +8,16 @@ Read the configuration first:
 gh app-auth list --format json
 ```
 
-Each entry of `github_apps` gives an app ID, an installation ID and its `patterns` (the **routes**). Pick one **test repository** per route: the route's repository itself, or for `github.com/OWNER/*` a repository of that owner the user names or that `/installation/repositories` (check 6) lists. `REPO` below is `OWNER/NAME`.
+Each entry of `github_apps` gives an `app_id`, an installation ID and its `patterns` (the **routes**); entries of `pats` are personal access tokens with their own patterns. Pick one **test repository** per route: the route's repository itself, or for `github.com/OWNER/*` a repository of that owner the developer named. `REPO` below is `OWNER/NAME`.
 
 | # | Check | Command | Pass | Fix |
 | -- | -- | -- | -- | -- |
 | 1 | Tools | `gh --version` and `gh extension list` | `gh` runs and lists `AmadeusITGroup/gh-app-auth` | 6 |
-| 2 | Key | `gh app-auth list --verify-keys` | every app shows its key as accessible | 4, then 6 |
+| 2 | Key and routing | `gh app-auth list --verify-keys` and the JSON above | every app shows its key as accessible, and no PAT pattern matches a test repository | key: 4, then 6; PAT: narrow or remove it with the developer (6) |
 | 3 | Route and token | `gh app-auth test --repo github.com/REPO` | all tests pass | route missing: 6; installation missing: 5 |
-| 4 | Bot identity | `gh app-auth exec --repo github.com/REPO -- gh api graphql -f query='{ viewer { login } }' --jq .data.viewer.login` | `SLUG[bot]`, never the developer's login | 6 |
-| 5 | App permissions | `gh app-auth exec --repo github.com/REPO -- gh api /apps/SLUG --jq '{owner: .owner.login, permissions}'` | permissions match the table in step 3 of the setup, nothing more | app settings (3), then accept the change on each installation (5) |
-| 6 | Installation reach | `gh app-auth exec --repo github.com/REPO -- gh api /installation/repositories --paginate --jq '.repositories[].full_name'` | every repository the route should cover is listed | 5 |
+| 4 | Bot identity | `gh app-auth exec --repo github.com/REPO -- gh api graphql -f query='{ viewer { login } }' --jq .data.viewer.login`, then `gh app-auth exec --repo github.com/REPO -- gh api /apps/SLUG --jq .id` | the login is `SLUG[bot]`, and the second command prints the route's `app_id` | 6 |
+| 5 | App permissions | `gh app-auth exec --repo github.com/REPO -- gh api /apps/SLUG --jq '{owner: .owner.login, permissions}'` | nothing beyond the table in step 3 of the setup; a permission from that table may be missing only if the developer chose to drop it | app settings (3), then accept the change on each installation (5) |
+| 6 | Installation reach | `gh app-auth exec --repo github.com/REPO -- gh api /installation/repositories --paginate --jq '.repositories[].full_name'` | every repository the developer wants agents on under this route is listed | 5 |
 | 7 | Git untouched | `git config --show-origin --get-regexp '^credential\.'` | no helper that calls `gh app-auth` (no output and exit code 1 pass) | ask before removing it (see step 6) |
 
 `SLUG` is the login from check 4 without `[bot]`. Run checks 3 to 6 once per route.

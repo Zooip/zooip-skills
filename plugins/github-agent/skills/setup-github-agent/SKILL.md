@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 Guide the developer through creating or reusing a GitHub App and configuring [gh-app-auth](https://github.com/AmadeusITGroup/gh-app-auth). Keep the workflow independent of any app, developer or organization.
 
-Stop after setup verification. Do not add agent usage rules, edit instruction files, mask personal credentials, configure cloud environments or package the skill. Preserve existing SSH pushes and commit identity; do not configure Git credential helpers.
+The skill ends at a verified setup; how agents then act lives in the `github-agent` skill. Git keeps the developer's SSH pushes and commit identity throughout (step 6).
 
 ## 1. Diagnose
 
@@ -22,7 +22,7 @@ Reuse known answers and inspect non-secret existing configuration before asking.
 
 - **App name and description:** distinguish the shared bot identity from the individual agent tools, such as Claude Code and Codex.
 - **App owner:** personal account or organization that will own the app, with its exact GitHub login.
-- **Installation targets:** exact user/organization logins and repositories to authorize. Distinguish all repositories of an owner from a selected list. Collect one accessible test repository per account.
+- **Installation targets:** exact user/organization logins and repositories to authorize. Distinguish all repositories of an owner from a selected list. Collect one accessible test repository per route: one per owner whose repositories are all authorized, and each selected repository tests itself.
 - **Existing app:** whether to reuse it; collect the App ID or Client ID and local PEM path when available.
 - **Local environment:** OS, availability of `gh`, and whether local commands can be executed. Explain that hosted cloud environments need separate validation and are outside this setup.
 
@@ -82,7 +82,7 @@ For existing installations, verify repository selection and accept requested per
 
 ## 6. Configure gh-app-auth
 
-Execute authorized local commands when possible. Otherwise provide exact commands and identify unverified steps. Report actual network/filesystem failures without claiming success.
+When a command cannot run locally, give the user the exact command and mark that step unverified.
 
 1. Install `gh` using supported OS instructions if missing. If initial authentication is needed, have the user complete `gh auth login` themselves. Do not log out, replace or expose existing credentials.
 2. Install the extension only if absent:
@@ -107,9 +107,9 @@ Execute authorized local commands when possible. Otherwise provide exact command
 
 ## 7. Verify and hand off
 
-Run every check in [references/verify.md](references/verify.md), on one collected test repository per account. Repeat the steps a failure names until every check passes, or report what stays outstanding, such as a pending organization approval. Do not create PRs, comments, commits or pushes just to test setup.
+Run every check in [references/verify.md](references/verify.md), on the test repository of each route. Repeat the steps a failure names until every check passes, or report what stays outstanding, such as a pending organization approval. Do not create PRs, comments, commits or pushes just to test setup.
 
-Summarize the app owner/name, account/repository routes, PEM path or keyring storage and the check results. Give `gh app-auth exec -- gh pr list` as a read-only example. Explain that it supplies a short-lived token only to that command; SSH pushes and commit identity remain unchanged. Stop here: agents then act through the `github-agent` skill of this plugin.
+Summarize the app owner/name, account/repository routes, PEM path or keyring storage and the check results. Give `gh app-auth exec --repo github.com/OWNER/REPO -- gh pr list` as a read-only example. Explain that it supplies a short-lived token only to that command; SSH pushes and commit identity remain unchanged. Stop here.
 
 ## References
 

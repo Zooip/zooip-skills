@@ -2,8 +2,8 @@
 """Build and check the plugins of this repo. Standard library only.
 
   python3 scripts/plugins.py build            regenerate every manifest from the *.meta.json sources
-  python3 scripts/plugins.py check [--base R] run every check; R is the ref versions are compared to
-                                              (default: the merge-base with origin/main)
+  python3 scripts/plugins.py check [--base R] run every check, the unit tests in tests/ included; R is the
+                                              ref versions are compared to (default: the merge-base with origin/main)
 """
 
 import argparse
@@ -301,6 +301,15 @@ def check_claude_validate(r):
             r.error(target, "`claude plugin validate` failed:\n" + (res.stdout + res.stderr).strip())
 
 
+def check_tests(r):
+    if not (ROOT / "tests").is_dir():
+        return
+    res = subprocess.run([sys.executable, "-m", "unittest", "discover", "-s", "tests"],
+                         cwd=ROOT, capture_output=True, text=True)
+    if res.returncode != 0:
+        r.error(ROOT / "tests", "unit tests failed:\n" + res.stderr.strip())
+
+
 def check(base_ref):
     r = Report()
     check_generated(r)
@@ -310,6 +319,7 @@ def check(base_ref):
     check_readme(r)
     check_versions(r, base_ref)
     check_claude_validate(r)
+    check_tests(r)
     for e in r.errors:
         print(f"✘ {e}", file=sys.stderr)
     if r.errors:

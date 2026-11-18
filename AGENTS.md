@@ -17,6 +17,7 @@ Agent skills shipped as plugins for Claude Code and Codex, and as plain skill fo
 - **Links stay inside their plugin.** An installed plugin is its own folder and nothing else: a relative link into another plugin resolves in this repo and breaks once installed. Reach another plugin's skill by name (see Dependencies).
 - **Skill names are unique across plugins.** rulesync flattens every source into one skills folder.
 - **The README links every skill** to its `SKILL.md`, and names every plugin.
+- **Tests.** Code a plugin ships, such as a hook, gets contract tests in `tests/` (outside the plugin, so they are not installed with it); the check runs them.
 
 ## Skills
 
