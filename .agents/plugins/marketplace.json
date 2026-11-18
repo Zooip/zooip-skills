@@ -27,10 +27,10 @@
       "category": "Developer Tools"
     },
     {
-      "name": "github-app",
+      "name": "github-agent",
       "source": {
         "source": "local",
-        "path": "./plugins/github-app"
+        "path": "./plugins/github-agent"
       },
       "policy": {
         "installation": "AVAILABLE"

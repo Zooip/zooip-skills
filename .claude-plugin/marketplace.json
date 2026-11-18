@@ -19,8 +19,8 @@
       "category": "engineering"
     },
     {
-      "name": "github-app",
-      "source": "./plugins/github-app",
+      "name": "github-agent",
+      "source": "./plugins/github-agent",
       "description": "Set up a GitHub App as the bot identity coding agents use to open and maintain PRs, authenticated through gh-app-auth.",
       "category": "engineering"
     }

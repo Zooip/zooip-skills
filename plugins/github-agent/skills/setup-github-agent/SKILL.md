@@ -1,5 +1,5 @@
 ---
-name: setup-github-app
+name: setup-github-agent
 description: Set up a GitHub App identity for coding agents. Collect the app name and target accounts, generate a prefilled registration link, guide PEM creation, configure gh-app-auth and verify authentication. Use when a developer wants agents to open and maintain PRs under a bot identity.
 disable-model-invocation: true
 ---

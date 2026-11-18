@@ -6,7 +6,7 @@ Agent skills for Claude Code, Codex and any tool [rulesync](https://github.com/d
 | -- | -- | -- |
 | [`pre-project`](#pre-project) | `setup-pre-project`, `pre-project`, `preliminary-study`, `exploration`, `architecture`, `breakdown` | `visual-grilling`, mattpocock-skills |
 | [`visual-grilling`](#visual-grilling) | `visual-grilling` | mattpocock-skills (`grilling`) |
-| [`github-app`](#github-app) | `setup-github-app` | `gh` |
+| [`github-agent`](#github-agent) | `setup-github-agent` | `gh` |
 
 Each plugin lives in `plugins/<plugin>/`, with its skills in `plugins/<plugin>/skills/`.
 
@@ -45,9 +45,9 @@ Install all the pre-project skills together: the phase skills read shared conven
 
 [`visual-grilling`](plugins/visual-grilling/skills/visual-grilling/SKILL.md) runs a grilling session with a board page: one diagram per option on structural questions, and answers on the page when the agent can publish Claude Artifacts. Usable on its own, on any design whose choices shape the architecture. It runs the rounds through `grilling` from the mattpocock-skills.
 
-## GitHub App
+## GitHub Agent
 
-[`/setup-github-app`](plugins/github-app/skills/setup-github-app/SKILL.md) creates or reuses a GitHub App as the bot identity coding agents use to open and maintain PRs, configures [gh-app-auth](https://github.com/AmadeusITGroup/gh-app-auth) and verifies each installation. SSH pushes and commit identity stay untouched.
+[`/setup-github-agent`](plugins/github-agent/skills/setup-github-agent/SKILL.md) creates or reuses a GitHub App as the bot identity coding agents use to open and maintain PRs, configures [gh-app-auth](https://github.com/AmadeusITGroup/gh-app-auth) and verifies each installation. SSH pushes and commit identity stay untouched.
 
 ## Install
 
@@ -57,7 +57,7 @@ Install all the pre-project skills together: the phase skills read shared conven
 /plugin marketplace add Zooip/zooip-skills
 /plugin install pre-project@zooip
 /plugin install visual-grilling@zooip
-/plugin install github-app@zooip
+/plugin install github-agent@zooip
 ```
 
 Install only the plugins you need, and the mattpocock-skills plugin the same way if you don't have it.
@@ -68,7 +68,7 @@ Install only the plugins you need, and the mattpocock-skills plugin the same way
 codex plugin marketplace add Zooip/zooip-skills
 codex plugin add pre-project
 codex plugin add visual-grilling
-codex plugin add github-app
+codex plugin add github-agent
 ```
 
 The mattpocock-skills have no Codex plugin manifest (each skill carries its own `agents/openai.yaml`): install them through rulesync, or copy their folders next to these skills.
@@ -88,12 +88,12 @@ rulesync has no plugins: add one source per plugin you want to `rulesync.jsonc`,
 }
 ```
 
-For the GitHub App setup alone:
+For the GitHub Agent plugin alone:
 
 ```jsonc
 {
   "sources": [
-    { "source": "Zooip/zooip-skills", "path": "plugins/github-app/skills" }
+    { "source": "Zooip/zooip-skills", "path": "plugins/github-agent/skills" }
   ]
 }
 ```

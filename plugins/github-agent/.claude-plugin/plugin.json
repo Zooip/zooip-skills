@@ -1,5 +1,5 @@
 {
-  "name": "github-app",
+  "name": "github-agent",
   "version": "0.1.0",
   "description": "Set up a GitHub App as the bot identity coding agents use to open and maintain PRs, authenticated through gh-app-auth.",
   "author": {
