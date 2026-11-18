@@ -10,10 +10,23 @@ gh app-auth list --format json
 
 Each entry of `github_apps` gives an `app_id`, an installation ID and its `patterns` (the **routes**); entries of `pats` are personal access tokens with their own patterns. Pick one **test repository** per route: the route's repository itself, or for `github.com/OWNER/*` a repository of that owner the developer named. `REPO` below is `OWNER/NAME`.
 
+A sandbox can read the gh-app-auth configuration yet not reach the host keyring that holds the key, so a visible app whose key shows `Not found` is unproven, not missing. Rerun these two commands **outside the sandbox**, through your environment's own escalation (the developer approves the prompt):
+
+```bash
+gh app-auth list --verify-keys
+gh app-auth exec --repo github.com/REPO -- gh pr list
+```
+
+- **Fail outside too:** the key is missing or invalid.
+- **Pass outside only:** the key is fine and reachable only with host access; run the remaining checks, and every later `gh app-auth` command, outside the sandbox.
+- **Pass inside:** no escalation needed.
+
+Ask the developer to run them in a local terminal only when your environment has no way out of its sandbox, such as a remote session.
+
 | # | Check | Command | Pass | Fix |
 | -- | -- | -- | -- | -- |
 | 1 | Tools | `gh --version` and `gh extension list` | `gh` runs and lists `AmadeusITGroup/gh-app-auth` | 6 |
-| 2 | Key and routing | `gh app-auth list --verify-keys` and the JSON above | every app shows its key as accessible, and no PAT pattern matches a test repository | key: 4, then 6; PAT: narrow or remove it with the developer (6) |
+| 2 | Key and routing | `gh app-auth list --verify-keys` and the JSON above | every app shows its key as accessible, outside the sandbox if needed, and no PAT pattern matches a test repository | key missing outside too: 4, then 6; key reachable only outside the sandbox: keep the key and run outside (6); PAT: narrow or remove it with the developer (6) |
 | 3 | Route and token | `gh app-auth test --repo github.com/REPO` | all tests pass | route missing: 6; installation missing: 5 |
 | 4 | Bot identity | `gh app-auth exec --repo github.com/REPO -- gh api graphql -f query='{ viewer { login } }' --jq .data.viewer.login`, then `gh app-auth exec --repo github.com/REPO -- gh api /apps/SLUG --jq .id` | the login is `SLUG[bot]`, and the second command prints the route's `app_id` | 6 |
 | 5 | App permissions | `gh app-auth exec --repo github.com/REPO -- gh api /apps/SLUG --jq '{owner: .owner.login, permissions}'` | nothing beyond the table in step 3 of the setup; a permission from that table may be missing only if the developer chose to drop it | app settings (3), then accept the change on each installation (5) |

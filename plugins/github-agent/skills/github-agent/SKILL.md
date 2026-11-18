@@ -29,6 +29,7 @@ gh app-auth exec --repo github.com/OWNER/NAME -- gh pr view 42 --json title,stat
 - Pass `--repo` every time, also inside the repository: worktrees and other remotes then resolve to the same route.
 - Reach GitHub through this `gh`, also where a GitHub MCP tool would do: this plugin cannot tell which identity an MCP server acts under.
 - Authenticate through `exec` alone: the token stays inside the child process.
+- A keyring error inside a sandbox (`secret not found`, key `Not found`) means the sandbox cannot reach the host keyring, not that the key is gone: rerun that `exec` outside the sandbox through your environment's escalation, and keep running `gh app-auth` there for the session.
 
 ## 4. Keep Git as it is
 

@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Give coding agents their own GitHub identity: set up a GitHub App through gh-app-auth, and have agents run every gh command under it.",
   "keywords": [
     "github",
