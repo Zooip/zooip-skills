@@ -1,0 +1,3 @@
+interface:
+  display_name: "GitHub Agent"
+  short_description: "Act on GitHub as the agents' bot identity"

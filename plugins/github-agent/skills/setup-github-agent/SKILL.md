@@ -109,7 +109,7 @@ Execute authorized local commands when possible. Otherwise provide exact command
 
 Run every check in [references/verify.md](references/verify.md), on one collected test repository per account. Repeat the steps a failure names until every check passes, or report what stays outstanding, such as a pending organization approval. Do not create PRs, comments, commits or pushes just to test setup.
 
-Summarize the app owner/name, account/repository routes, PEM path or keyring storage and the check results. Give `gh app-auth exec -- gh pr list` as a read-only example. Explain that it supplies a short-lived token only to that command; SSH pushes and commit identity remain unchanged. Stop here: agent usage rules are a separate, later step.
+Summarize the app owner/name, account/repository routes, PEM path or keyring storage and the check results. Give `gh app-auth exec -- gh pr list` as a read-only example. Explain that it supplies a short-lived token only to that command; SSH pushes and commit identity remain unchanged. Stop here: agents then act through the `github-agent` skill of this plugin.
 
 ## References
 

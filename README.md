@@ -6,7 +6,7 @@ Agent skills for Claude Code, Codex and any tool [rulesync](https://github.com/d
 | -- | -- | -- |
 | [`pre-project`](#pre-project) | `setup-pre-project`, `pre-project`, `preliminary-study`, `exploration`, `architecture`, `breakdown` | `visual-grilling`, mattpocock-skills |
 | [`visual-grilling`](#visual-grilling) | `visual-grilling` | mattpocock-skills (`grilling`) |
-| [`github-agent`](#github-agent) | `setup-github-agent` | `gh` |
+| [`github-agent`](#github-agent) | `setup-github-agent`, `github-agent` | `gh`, gh-app-auth |
 
 Each plugin lives in `plugins/<plugin>/`, with its skills in `plugins/<plugin>/skills/`.
 
@@ -48,6 +48,8 @@ Install all the pre-project skills together: the phase skills read shared conven
 ## GitHub Agent
 
 [`/setup-github-agent`](plugins/github-agent/skills/setup-github-agent/SKILL.md) sets up, checks or repairs the GitHub App coding agents use as their bot identity to open and maintain PRs. It diagnoses an existing setup first, configures [gh-app-auth](https://github.com/AmadeusITGroup/gh-app-auth) and verifies each installation. SSH pushes and commit identity stay untouched.
+
+[`github-agent`](plugins/github-agent/skills/github-agent/SKILL.md) is the skill agents reach for on their own before any `gh` command or GitHub API call: it checks the repository is covered, runs every `gh` command through `gh app-auth exec`, and reports what the bot is refused instead of falling back to your account.
 
 ## Install
 
