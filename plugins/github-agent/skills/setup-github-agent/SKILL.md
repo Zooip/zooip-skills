@@ -28,7 +28,7 @@ Reuse known answers and inspect non-secret existing configuration before asking.
 
 Never ask for private key contents or tokens in chat. Do not hardcode information from a previous developer's setup.
 
-Check `gh --version` and `gh extension list`. If installed, read `gh app-auth setup --help` and `gh app-auth exec --help`. Use `gh api user --jq .login` to identify the authenticated account when useful, without assuming it is the intended owner. Do not print stored tokens or full secret-bearing configuration files.
+Check `gh --version` and `gh extension list`. If installed, read `gh app-auth setup --help` and `gh app-auth exec --help`. Use `gh auth status` to identify the authenticated account when useful, without assuming it is the intended owner. Do not print stored tokens or full secret-bearing configuration files.
 
 ## 3. Generate the prefilled form
 
