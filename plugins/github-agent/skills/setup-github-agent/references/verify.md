@@ -10,10 +10,21 @@ gh app-auth list --format json
 
 Each entry of `github_apps` gives an `app_id`, an installation ID and its `patterns` (the **routes**); entries of `pats` are personal access tokens with their own patterns. Pick one **test repository** per route: the route's repository itself, or for `github.com/OWNER/*` a repository of that owner the developer named. `REPO` below is `OWNER/NAME`.
 
+Run every check in the context agents will act from: a sandbox, container or remote session can read the gh-app-auth configuration yet not reach the host keyring that holds the key. A visible app whose key shows `Not found` is therefore unproven, not missing. Before treating it as missing, have the developer run in a fresh local terminal:
+
+```bash
+gh app-auth list --verify-keys
+gh app-auth exec --repo github.com/REPO -- gh pr list
+```
+
+- **Fails in both contexts:** the key is missing or invalid.
+- **Passes locally, fails for the agent:** the agents' context lacks keyring access; the key is fine.
+- **Passes in both:** the setup is valid.
+
 | # | Check | Command | Pass | Fix |
 | -- | -- | -- | -- | -- |
 | 1 | Tools | `gh --version` and `gh extension list` | `gh` runs and lists `AmadeusITGroup/gh-app-auth` | 6 |
-| 2 | Key and routing | `gh app-auth list --verify-keys` and the JSON above | every app shows its key as accessible, and no PAT pattern matches a test repository | key: 4, then 6; PAT: narrow or remove it with the developer (6) |
+| 2 | Key and routing | `gh app-auth list --verify-keys` and the JSON above | every app shows its key as accessible in the agents' context, and no PAT pattern matches a test repository | key missing in both contexts: 4, then 6; key reachable only locally: keyring access (6), keeping the key; PAT: narrow or remove it with the developer (6) |
 | 3 | Route and token | `gh app-auth test --repo github.com/REPO` | all tests pass | route missing: 6; installation missing: 5 |
 | 4 | Bot identity | `gh app-auth exec --repo github.com/REPO -- gh api graphql -f query='{ viewer { login } }' --jq .data.viewer.login`, then `gh app-auth exec --repo github.com/REPO -- gh api /apps/SLUG --jq .id` | the login is `SLUG[bot]`, and the second command prints the route's `app_id` | 6 |
 | 5 | App permissions | `gh app-auth exec --repo github.com/REPO -- gh api /apps/SLUG --jq '{owner: .owner.login, permissions}'` | nothing beyond the table in step 3 of the setup; a permission from that table may be missing only if the developer chose to drop it | app settings (3), then accept the change on each installation (5) |

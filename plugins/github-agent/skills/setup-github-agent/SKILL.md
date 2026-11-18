@@ -6,11 +6,11 @@ disable-model-invocation: true
 
 Guide the developer through creating or reusing a GitHub App and configuring [gh-app-auth](https://github.com/AmadeusITGroup/gh-app-auth). Keep the workflow independent of any app, developer or organization.
 
-The skill ends at a verified setup; how agents then act lives in the `github-agent` skill. Git keeps the developer's SSH pushes and commit identity throughout (step 6).
+The skill ends at a verified setup; how agents then act lives in the `github-agent` skill. Git keeps the developer's SSH pushes and commit identity throughout (step 6, item 6).
 
 ## 1. Diagnose
 
-Run `gh extension list`. When it lists gh-app-auth and `gh app-auth list` shows at least one app, run every check in [references/verify.md](references/verify.md) and report its result table.
+Run `gh extension list`. When it lists gh-app-auth and `gh app-auth list` shows at least one app, run every check in [references/verify.md](references/verify.md) and report its result table. Run them in the context agents will act from, such as their sandbox or container, and settle any key reported `Not found` with the cross-check in that file before treating it as missing.
 
 - **All checks pass:** confirm the routes cover every account and repository the developer wants agents on. If they do, give the hand-off summary of step 7 and stop.
 - **Some checks fail, or a target is missing:** run only the steps the failures name, reusing the app ID, key and routes already configured. Ask in step 2 only for what the configuration cannot tell. Then go to step 7.
@@ -102,14 +102,20 @@ When a command cannot run locally, give the user the exact command and mark that
      --name "APP_DISPLAY_NAME"
    ```
 
-   Substitute `--client-id CLIENT_ID` for `--app-id` when using a supported Client ID; do not pass both. Prefer the default OS keyring. If unavailable, explain the filesystem alternative and use `--use-filesystem` explicitly. Preserve unrelated app/PAT entries; resolve existing overlapping routes before rerunning setup.
-5. Do not run `gh app-auth gitconfig --sync` or `gh auth setup-git`. Leave Git remotes, SSH authentication and `user.name`/`user.email` intact.
+   Substitute `--client-id CLIENT_ID` for `--app-id` when using a supported Client ID; do not pass both. Prefer the default OS keyring. Preserve unrelated app/PAT entries; resolve existing overlapping routes before rerunning setup.
+5. Read the keyring outcome from the cross-check in [references/verify.md](references/verify.md):
+
+   - **Key missing:** it fails in both contexts. Store the PEM with step 4, then rerun setup.
+   - **Keyring out of reach:** it passes in a fresh local terminal and fails in the agents' context. Keep the key: request host keyring access through the environment's own permission mechanism, then run the setup and its verification under that same access. A setup that succeeds with host access, followed by a sandboxed check that fails, means the check lacked access, not that storage failed.
+   - **File storage:** `--use-filesystem` stores the key in a file instead of the keyring. Present it with its consequences, a key file readable by any process running as the developer, and use it only on the developer's explicit choice.
+
+6. Do not run `gh app-auth gitconfig --sync` or `gh auth setup-git`. Leave Git remotes, SSH authentication and `user.name`/`user.email` intact.
 
 ## 7. Verify and hand off
 
 Run every check in [references/verify.md](references/verify.md), on the test repository of each route. Repeat the steps a failure names until every check passes, or report what stays outstanding, such as a pending organization approval. Do not create PRs, comments, commits or pushes just to test setup.
 
-Summarize the app owner/name, account/repository routes, PEM path or keyring storage and the check results. Give `gh app-auth exec --repo github.com/OWNER/REPO -- gh pr list` as a read-only example. Explain that it supplies a short-lived token only to that command; SSH pushes and commit identity remain unchanged. Stop here.
+Summarize the app owner/name, account/repository routes, PEM path or keyring storage, the check results and the context they ran in. When the key is reachable only with host keyring access, say so: agents in a sandbox without it will fail. Give `gh app-auth exec --repo github.com/OWNER/REPO -- gh pr list` as a read-only example. Explain that it supplies a short-lived token only to that command; SSH pushes and commit identity remain unchanged. Stop here.
 
 ## References
 
