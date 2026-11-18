@@ -54,13 +54,15 @@ Use these parameters for an agent that maintains PRs, debugs CI, reads reviews a
 | `request_oauth_on_install` | `false` |
 | `contents` | `write` |
 | `pull_requests` | `write` |
+| `issues` | `write` |
+| `discussions` | `write` |
 | `checks` | `read` |
 | `statuses` | `read` |
 | `actions` | `write` |
 | `workflows` | `write` |
 | `vulnerability_alerts` | `read` |
 
-Explain the proposed access: Contents and Pull requests allow code/PR changes, reviews and comments; Checks and Commit statuses expose CI results; Actions exposes logs and reruns; Workflows allows workflow-file updates; Dependabot alerts exposes vulnerability reports. Contents permits writes even though this workflow keeps local pushes authenticated with the developer's SSH key. Remove permissions outside the collected needs. Leave Issues, administration, secrets and organization permissions unset unless specifically needed; Metadata read access is implicit. Do not grant bypass rights.
+Explain the proposed access: Contents and Pull requests allow code/PR changes, reviews and comments; Issues and Discussions allow agents to create and maintain planning and support threads; Checks and Commit statuses expose CI results; Actions exposes logs and reruns; Workflows allows workflow-file updates; Dependabot alerts exposes vulnerability reports. Contents permits writes even though this workflow keeps local pushes authenticated with the developer's SSH key. Remove permissions outside the collected needs. Leave administration, secrets and organization permissions unset unless specifically needed; Metadata read access is implicit. Do not grant bypass rights.
 
 Explain that **Any account** permits installation on multiple accounts without making repositories public or sharing access between installations. **Only on this account** cannot cover both personal repositories and a different organization. A Marketplace listing is unnecessary.
 
