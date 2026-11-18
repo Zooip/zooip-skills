@@ -47,7 +47,7 @@ Install all the pre-project skills together: the phase skills read shared conven
 
 ## GitHub Agent
 
-[`/setup-github-agent`](plugins/github-agent/skills/setup-github-agent/SKILL.md) creates or reuses a GitHub App as the bot identity coding agents use to open and maintain PRs, configures [gh-app-auth](https://github.com/AmadeusITGroup/gh-app-auth) and verifies each installation. SSH pushes and commit identity stay untouched.
+[`/setup-github-agent`](plugins/github-agent/skills/setup-github-agent/SKILL.md) sets up, checks or repairs the GitHub App coding agents use as their bot identity to open and maintain PRs. It diagnoses an existing setup first, configures [gh-app-auth](https://github.com/AmadeusITGroup/gh-app-auth) and verifies each installation. SSH pushes and commit identity stay untouched.
 
 ## Install
 

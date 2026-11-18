@@ -1,5 +1,5 @@
 interface:
   display_name: "Setup GitHub Agent"
-  short_description: "A GitHub App identity for coding agents"
+  short_description: "Set up or check the GitHub App identity of coding agents"
 policy:
   allow_implicit_invocation: false

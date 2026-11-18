@@ -1,6 +1,6 @@
 ---
 name: setup-github-agent
-description: Set up a GitHub App identity for coding agents. Collect the app name and target accounts, generate a prefilled registration link, guide PEM creation, configure gh-app-auth and verify authentication. Use when a developer wants agents to open and maintain PRs under a bot identity.
+description: Set up, check or repair the GitHub App identity coding agents use through gh-app-auth. Diagnoses an existing setup first and runs only the steps that fail.
 disable-model-invocation: true
 ---
 
@@ -8,7 +8,15 @@ Guide the developer through creating or reusing a GitHub App and configuring [gh
 
 Stop after setup verification. Do not add agent usage rules, edit instruction files, mask personal credentials, configure cloud environments or package the skill. Preserve existing SSH pushes and commit identity; do not configure Git credential helpers.
 
-## 1. Collect information
+## 1. Diagnose
+
+Run `gh extension list`. When it lists gh-app-auth and `gh app-auth list` shows at least one app, run every check in [references/verify.md](references/verify.md) and report its result table.
+
+- **All checks pass:** confirm the routes cover every account and repository the developer wants agents on. If they do, give the hand-off summary of step 7 and stop.
+- **Some checks fail, or a target is missing:** run only the steps the failures name, reusing the app ID, key and routes already configured. Ask in step 2 only for what the configuration cannot tell. Then go to step 7.
+- **No app configured:** start at step 2.
+
+## 2. Collect information
 
 Reuse known answers and inspect non-secret existing configuration before asking. Collect missing information in a short batch:
 
@@ -22,7 +30,7 @@ Never ask for private key contents or tokens in chat. Do not hardcode informatio
 
 Check `gh --version` and `gh extension list`. If installed, read `gh app-auth setup --help` and `gh app-auth exec --help`. Use `gh api user --jq .login` to identify the authenticated account when useful, without assuming it is the intended owner. Do not print stored tokens or full secret-bearing configuration files.
 
-## 2. Generate the prefilled form
+## 3. Generate the prefilled form
 
 For an existing app, skip creation and verify its settings instead.
 
@@ -58,7 +66,7 @@ Explain that **Any account** permits installation on multiple accounts without m
 
 Have the user review the form, leave callback/setup URLs empty, keep OAuth user authorization, device flow and webhooks off, and create the app. Record its App ID or Client ID and actual slug/settings URL. Never guess the slug from its name.
 
-## 3. Generate and store the PEM
+## 4. Generate and store the PEM
 
 Guide the user through the app owner's **Settings → Developer settings → GitHub Apps → Edit**. Current interfaces use **Credentials → Key pairs → New key**; older ones show **Private keys → Generate a private key**. Follow the labels actually visible.
 
@@ -66,13 +74,13 @@ Have the user download the PEM and provide its local path only. Recommend a dire
 
 Reuse an existing valid PEM instead of rotating it unnecessarily. Never display it, commit it, put its contents in command arguments or distribute this developer's key to teammates. Explain that tokens expire but private keys remain valid until revoked. Provision each developer's intended app/key explicitly.
 
-## 4. Install on the target accounts
+## 5. Install on the target accounts
 
 From the app settings, open **Install App**. Install separately on every collected user/organization account, preferably with **Only select repositories** and the collected repository list. Select all repositories only when requested. If organization approval is needed, report the outstanding request rather than claiming completion.
 
 For existing installations, verify repository selection and accept requested permission changes. Distinguish app IDs from installation IDs: an app has one installation per target account. Let gh-app-auth discover installations; collect an explicit installation ID only if auto-detection fails or routing is ambiguous.
 
-## 5. Configure gh-app-auth
+## 6. Configure gh-app-auth
 
 Execute authorized local commands when possible. Otherwise provide exact commands and identify unverified steps. Report actual network/filesystem failures without claiming success.
 
@@ -97,27 +105,11 @@ Execute authorized local commands when possible. Otherwise provide exact command
    Substitute `--client-id CLIENT_ID` for `--app-id` when using a supported Client ID; do not pass both. Prefer the default OS keyring. If unavailable, explain the filesystem alternative and use `--use-filesystem` explicitly. Preserve unrelated app/PAT entries; resolve existing overlapping routes before rerunning setup.
 5. Do not run `gh app-auth gitconfig --sync` or `gh auth setup-git`. Leave Git remotes, SSH authentication and `user.name`/`user.email` intact.
 
-## 6. Verify and hand off
+## 7. Verify and hand off
 
-Check key accessibility, then test one collected repository per account without writing anything to GitHub:
+Run every check in [references/verify.md](references/verify.md), on one collected test repository per account. Repeat the steps a failure names until every check passes, or report what stays outstanding, such as a pending organization approval. Do not create PRs, comments, commits or pushes just to test setup.
 
-```bash
-gh app-auth list --verify-keys
-gh app-auth test --repo github.com/OWNER/REPO
-gh app-auth exec --repo github.com/OWNER/REPO -- \
-  gh api repos/OWNER/REPO --jq .full_name
-```
-
-Verify the API identity for each installation, without printing its token:
-
-```bash
-gh app-auth exec --repo github.com/OWNER/REPO -- \
-  gh api graphql -f query='{ viewer { login } }' --jq .data.viewer.login
-```
-
-Expect the configured app's bot login, not the developer's. If GraphQL is blocked, report identity verification as incomplete; repository readability alone does not prove the identity. Do not create PRs, comments, commits or pushes just to test setup.
-
-Summarize the app owner/name, account/repository routes, PEM path or keyring storage and verification results. Give `gh app-auth exec -- gh pr list` as a read-only example. Explain that it supplies a short-lived token only to that command; SSH pushes and commit identity remain unchanged. Stop here: agent usage rules are a separate, later step.
+Summarize the app owner/name, account/repository routes, PEM path or keyring storage and the check results. Give `gh app-auth exec -- gh pr list` as a read-only example. Explain that it supplies a short-lived token only to that command; SSH pushes and commit identity remain unchanged. Stop here: agent usage rules are a separate, later step.
 
 ## References
 
