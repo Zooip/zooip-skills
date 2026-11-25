@@ -52,10 +52,10 @@ A team may keep documents somewhere else than its tracker suggests (Linear ticke
 
 **Section E: UX.** Skip it when the repo has no end-user interface (a library, an API alone), and say so: the UX design phase will then always be « not applicable ». When `ux.md` exists, review it with the user instead. Otherwise fill the seed [ux.md](ux.md) one part at a time, proposing what exploration found and asking only for what it could not:
 
-- **End users and testing**: who they are, and how a test is run (who organises it, who can take part, how long, where, on which device).
-- **Success criteria**: what makes the product succeed for them, beyond each feature's spec. Propose the ones a doc already states; otherwise ask for two or three.
+- **End users and testing**: who they are, and how a test is run (who organises it, who can take part and how many per round, how long, where, on which device). Recommend about five participants per round when the population allows; with one or two end users, all of them, in more short rounds.
+- **Success criteria**: what makes the product succeed for them, beyond each feature's spec, each with how a design is checked against it. Propose the ones a doc already states; otherwise ask for two or three.
 - **Friction baseline**: the tools they use today for the tasks the product covers, and where the agent can see them (a sample file, screenshots, a person to watch).
-- **Design system**: components, tokens, interface review skills, the heuristic grid (recommend Nielsen's ten), the usage contexts (pointer or touch, target sizes, screen widths).
+- **Design system**: components, tokens, interface review skills, the heuristic grid (recommend Nielsen's ten), the accessibility target (recommend WCAG 2.2 AA) and what checks it in the app, the usage contexts (pointer or touch, target sizes, screen widths).
 - **Prototypes**: the default medium. Recommend an artifact when the agent can publish one and the design system can be approximated by tokens or a stylesheet; in the app when its components cannot be imitated. Note what an artifact can reproduce.
 - **Where mockups live**: recommend storing the options page and the prototype next to the UX design document, linked from it.
 

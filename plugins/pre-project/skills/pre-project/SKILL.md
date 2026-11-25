@@ -19,7 +19,7 @@ Every phase follows the shared rules in [references/conventions.md](references/c
 ## Process
 
 1. **Locate the project.** Take it from the argument, in the form `docs/agents/project-docs.md` describes, or ask for it. Read the need (description, comments, linked tickets and feedback) and list the phase documents that exist.
-2. **Find the current phase.** The first phase whose document is missing is the current one, skipping the UX design when the exploration records the interface as « not applicable »; once the architecture document exists, the breakdown is done when the project has its tickets. A document that ends on unanswered **pivots** (see the conventions) means its phase is not finished: say which pivots, and who is meant to answer them.
+2. **Find the current phase.** The first phase whose document is missing is the current one, skipping the UX design when the exploration records the interface as « not applicable » (« light » runs it on its short path); once the architecture document exists, the breakdown is done when the project has its tickets. A document that ends on unanswered **pivots** (see the conventions) means its phase is not finished: say which pivots, and who is meant to answer them.
 3. **Report the state** in a few lines: what each existing document settled, the **settings** still waiting for an answer and the working hypothesis standing in for each, and the next phase.
 4. **Hand over.** Tell the user which skill to run next, with the project as its argument. If answers to open questions arrived since the last phase, say which documents and tickets they update (the conventions describe how) before moving on.
 
