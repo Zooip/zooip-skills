@@ -1,5 +1,5 @@
 interface:
   display_name: "Architecture"
-  short_description: "Phase 3: modules, interfaces, blast radius"
+  short_description: "Phase 4: modules, interfaces, blast radius"
 policy:
   allow_implicit_invocation: false
