@@ -9,7 +9,7 @@
     {
       "name": "pre-project",
       "source": "./plugins/pre-project",
-      "description": "Pre-project skills: take a project from a loose need to agent-ready tickets in four phases (preliminary study, exploration, architecture, breakdown). Tracker- and docs-agnostic. The exploration phase needs the visual-grilling plugin.",
+      "description": "Pre-project skills: take a project from a loose need to agent-ready tickets in five phases (preliminary study, exploration, UX design, architecture, breakdown). Tracker- and docs-agnostic. The exploration phase needs the visual-grilling plugin.",
       "category": "engineering"
     },
     {

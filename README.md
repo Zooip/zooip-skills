@@ -4,7 +4,7 @@ Agent skills for Claude Code, Codex and any tool [rulesync](https://github.com/d
 
 | Plugin | Skills | Needs |
 | -- | -- | -- |
-| [`pre-project`](#pre-project) | `setup-pre-project`, `pre-project`, `preliminary-study`, `exploration`, `architecture`, `breakdown` | `visual-grilling`, mattpocock-skills |
+| [`pre-project`](#pre-project) | `setup-pre-project`, `pre-project`, `preliminary-study`, `exploration`, `ux-design`, `architecture`, `breakdown` | `visual-grilling`, mattpocock-skills |
 | [`visual-grilling`](#visual-grilling) | `visual-grilling` | mattpocock-skills (`grilling`) |
 | [`github-agent`](#github-agent) | `setup-github-agent`, `github-agent` | `gh`, gh-app-auth |
 
@@ -12,16 +12,17 @@ Each plugin lives in `plugins/<plugin>/`, with its skills in `plugins/<plugin>/s
 
 ## Pre-project
 
-Take a project from a loose need to tickets an agent can grab, in four phases. Each phase leaves a document the next one starts from, so a phase can run in a fresh session or be picked up by someone else.
+Take a project from a loose need to tickets an agent can grab, in five phases. Each phase leaves a document the next one starts from, so a phase can run in a fresh session or be picked up by someone else.
 
 | Skill | Role |
 | -- | -- |
-| [`/setup-pre-project`](plugins/pre-project/skills/setup-pre-project/SKILL.md) | Run once per repo: what a project is in your tools, where phase documents live, their language, the triage labels |
+| [`/setup-pre-project`](plugins/pre-project/skills/setup-pre-project/SKILL.md) | Run once per repo: what a project is in your tools, where phase documents live, their language, the triage labels, the end users and the design system |
 | [`/pre-project <project>`](plugins/pre-project/skills/pre-project/SKILL.md) | Entry point: finds the current phase of a project and names the next skill |
 | [`/preliminary-study`](plugins/pre-project/skills/preliminary-study/SKILL.md) | Phase 1: what the code does today, blockers, traps, the questions the spec leaves open |
 | [`/exploration`](plugins/pre-project/skills/exploration/SKILL.md) | Phase 2: widen the field of solutions, then converge through a visual grilling session |
-| [`/architecture`](plugins/pre-project/skills/architecture/SKILL.md) | Phase 3: modules, interfaces, stable technical names, blast radius, for peer review |
-| [`/breakdown`](plugins/pre-project/skills/breakdown/SKILL.md) | Phase 4: tracer-bullet tickets, with open questions carried as provisional rules |
+| [`/ux-design`](plugins/pre-project/skills/ux-design/SKILL.md) | Phase 3: job stories, friction budget, low-fidelity options, a clickable prototype, a heuristic review and a test with a real end user, distilled into acceptance criteria. Skipped when the project has no interface |
+| [`/architecture`](plugins/pre-project/skills/architecture/SKILL.md) | Phase 4: modules, interfaces, stable technical names, blast radius, for peer review |
+| [`/breakdown`](plugins/pre-project/skills/breakdown/SKILL.md) | Phase 5: tracer-bullet tickets, with open questions carried as provisional rules |
 
 An open question never stalls the pre-project unless its answer would change the direction (a **pivot**). Any other question (a **setting**) proceeds on a working hypothesis, recorded with who answers it and where the answer will land.
 
@@ -30,7 +31,7 @@ Works with any tracker and documentation system: Linear, Jira with Confluence, G
 ### Requirements
 
 - The `visual-grilling` plugin: `/exploration` runs its convergence through it.
-- The [mattpocock-skills](https://github.com/mattpocock/skills): the phases build on `grilling`, `codebase-design` and `to-tickets`, and on the configuration `/setup-matt-pocock-skills` writes (issue tracker, glossary).
+- The [mattpocock-skills](https://github.com/mattpocock/skills): the phases build on `grilling`, `codebase-design` and `to-tickets` (and `prototype` when the UX design builds a prototype in the app), and on the configuration `/setup-matt-pocock-skills` writes (issue tracker, glossary).
 - Access to your tracker and documentation system from the agent (an MCP server or a CLI such as `gh`).
 
 Install all the pre-project skills together: the phase skills read shared conventions from `plugins/pre-project/skills/pre-project/references/`. Neither rulesync nor the plugins resolve dependencies for you: every skill checks they are there before it starts, and names the line that installs them if one is missing.
@@ -86,7 +87,7 @@ rulesync has no plugins: add one source per plugin you want to `rulesync.jsonc`,
   "sources": [
     { "source": "Zooip/zooip-skills", "path": "plugins/pre-project/skills" },
     { "source": "Zooip/zooip-skills", "path": "plugins/visual-grilling/skills" },
-    { "source": "mattpocock/skills", "path": "skills/engineering", "skills": ["codebase-design", "to-tickets", "setup-matt-pocock-skills"] },
+    { "source": "mattpocock/skills", "path": "skills/engineering", "skills": ["codebase-design", "to-tickets", "prototype", "setup-matt-pocock-skills"] },
     { "source": "mattpocock/skills", "path": "skills/productivity", "skills": ["grilling"] }
   ]
 }

@@ -1,14 +1,16 @@
 # Pre-project conventions
 
-Shared by every phase skill: `preliminary-study`, `exploration`, `architecture`, `breakdown`. Each one points here; nothing below is repeated in them.
+Shared by every phase skill: `preliminary-study`, `exploration`, `ux-design`, `architecture`, `breakdown`. Each one points here; nothing below is repeated in them.
 
 ## Dependencies
 
 The phases build on four skills from [mattpocock-skills](https://github.com/mattpocock/skills): `grilling`, `codebase-design`, `to-tickets` and `setup-matt-pocock-skills`. Check that each one is in your available skills before anything else. If one is missing, stop and tell the user which, with the line that installs it for the way they installed these skills:
 
 - Claude Code plugin: `/plugin marketplace add mattpocock/skills`, then `/plugin install mattpocock-skills@mattpocock`;
-- rulesync: add `{ "source": "mattpocock/skills", "path": "skills/engineering", "skills": ["codebase-design", "to-tickets", "setup-matt-pocock-skills"] }` and `{ "source": "mattpocock/skills", "path": "skills/productivity", "skills": ["grilling"] }` to `sources` in `rulesync.jsonc`, then run `rulesync install && rulesync generate`;
+- rulesync: add `{ "source": "mattpocock/skills", "path": "skills/engineering", "skills": ["codebase-design", "to-tickets", "prototype", "setup-matt-pocock-skills"] }` and `{ "source": "mattpocock/skills", "path": "skills/productivity", "skills": ["grilling"] }` to `sources` in `rulesync.jsonc`, then run `rulesync install && rulesync generate`;
 - anything else (a Codex plugin, a copy): install them through rulesync, or copy their folders next to these skills.
+
+The UX design phase also calls `prototype`, from the same repo, when it builds a prototype in the app. Check it only then; it installs the same way (it is already in the rulesync line above).
 
 The exploration phase also needs `visual-grilling`, from the `visual-grilling` plugin of this marketplace. Check it the same way; if it is missing, give the line for the way the user installed the pre-project:
 
@@ -22,9 +24,10 @@ The repo's configuration should have been provided to you, in `docs/agents/` (su
 
 - `project-docs.md`: what a project is here, where its documents live, their language and titles, how diagrams and agent notes are written;
 - `issue-tracker.md` and `triage-labels.md`: where tickets live and which labels carry the triage roles;
-- `domain.md`: where the glossary and the ADRs live.
+- `domain.md`: where the glossary and the ADRs live;
+- `ux.md`: who the end users are and how to test with them, the success criteria, the friction baseline, the design system, where mockups live. Only the UX design phase needs it.
 
-If `project-docs.md` or `triage-labels.md` is missing, tell the user to run `/setup-pre-project`. If `issue-tracker.md` or `domain.md` is missing, tell the user to run `/setup-matt-pocock-skills`. Stop there: a phase run without them writes documents nobody will find.
+If `project-docs.md` or `triage-labels.md` is missing, or `ux.md` when the UX design phase runs, tell the user to run `/setup-pre-project`. If `issue-tracker.md` or `domain.md` is missing, tell the user to run `/setup-matt-pocock-skills`. Stop there: a phase run without them writes documents nobody will find.
 
 ## Open questions never stall the pre-project
 
@@ -48,7 +51,7 @@ Finding a fact in the code, the tracker or the docs is the agent's job; asking t
 
 ## Phase documents
 
-- One document per phase, where `project-docs.md` says, under the titles it gives for the preliminary study, the exploration and the architecture. The breakdown leaves tickets, not a document. Replaying a phase updates its document.
+- One document per phase, where `project-docs.md` says, under the titles it gives for the preliminary study, the exploration, the UX design and the architecture. A `project-docs.md` written before the UX design phase existed has no title for it: tell the user to run `/setup-pre-project` again, which adds it. The breakdown leaves tickets, not a document. Replaying a phase updates its document.
 - Documents are written in the language `project-docs.md` sets, for people first: short sentences, one term per concept throughout, tables for comparisons, diagrams wherever a structure or a flow is the point. The phase skills name sections in English; translate them when writing.
 - Diagrams are Mermaid, unless `project-docs.md` gives a fallback for a system that cannot render them.
 - Detail aimed at agents (file lists, code facts with `file:line`, conventions to follow) goes in a collapsible « Agent notes » section at the end, in the syntax `project-docs.md` gives, so the human part stays readable.

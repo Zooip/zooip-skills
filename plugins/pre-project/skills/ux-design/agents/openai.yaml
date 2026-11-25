@@ -1,0 +1,5 @@
+interface:
+  display_name: "UX Design"
+  short_description: "Phase 3: job stories, mockups, user test"
+policy:
+  allow_implicit_invocation: false

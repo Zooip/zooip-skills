@@ -1,7 +1,7 @@
 {
   "name": "pre-project",
-  "version": "0.2.0",
-  "description": "Pre-project skills: take a project from a loose need to agent-ready tickets in four phases (preliminary study, exploration, architecture, breakdown). Tracker- and docs-agnostic. The exploration phase needs the visual-grilling plugin.",
+  "version": "0.3.0",
+  "description": "Pre-project skills: take a project from a loose need to agent-ready tickets in five phases (preliminary study, exploration, UX design, architecture, breakdown). Tracker- and docs-agnostic. The exploration phase needs the visual-grilling plugin.",
   "author": {
     "name": "Zooip",
     "url": "https://github.com/Zooip"
@@ -17,7 +17,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Pre-project",
-    "shortDescription": "From a loose need to agent-ready tickets, in four documented phases",
+    "shortDescription": "From a loose need to agent-ready tickets, in five documented phases",
     "developerName": "Zooip",
     "category": "Developer Tools"
   }
