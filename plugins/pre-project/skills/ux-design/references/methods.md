@@ -12,9 +12,10 @@ This skill keeps **counts in two columns, not times** (this skill):
 
 | Column | Counts one for each | KLM operators |
 | -- | -- | -- |
-| Physical | click or tap, field filled (whatever its length), screen or tab change, switch between keyboard and pointer | K, P, H |
+| Physical | click or tap, field filled, screen or tab change, switch between keyboard and pointer | K, P, H |
 | Mental | decision the screen asks for, value looked up elsewhere (another file, paper, memory), calculation in the head, check that something worked | M |
 
+- A field counts as **one** physical operation whatever its widget (free text, list, date picker, checkbox) and its length; choosing the value, when the screen asks for a decision, is a mental operation counted apart (this skill). Counting a list as two operations (open, pick) against one for free text would push the budget towards free text, which yields dirty data.
 - A mental operation costs about as much as pointing and clicking (1.35 s against 1.1 s plus a button press), and several keystrokes: never treat it as free. A design that removes two clicks and adds a decision has not reduced friction.
 - Each count is **estimated** (read from a file, screenshots, a description) or **observed** (watched while the end user does it). An estimated baseline is confirmed during the test (« show me how you do it today »).
 - The full KLM time calculation, with its rules for placing M, is out of scope: the counts only need to compare today's tool and each option the same way.
@@ -23,7 +24,7 @@ This skill keeps **counts in two columns, not times** (this skill):
 
 - **Heuristics**: Jakob Nielsen's ten usability heuristics (with Rolf Molich, 1990; refined 1994), [nngroup.com/articles/ten-usability-heuristics](https://www.nngroup.com/articles/ten-usability-heuristics/): visibility of system status; match between the system and the real world; user control and freedom; consistency and standards; error prevention; recognition rather than recall; flexibility and efficiency of use; aesthetic and minimalist design; help users recognize, diagnose, and recover from errors; help and documentation.
 - **Evaluators**: « Ideally, three to five people should independently evaluate the same interface », since each one misses some issues; they do not see each other's findings until their own evaluation is complete, then consolidate them by clustering similar issues ([how to conduct a heuristic evaluation](https://www.nngroup.com/articles/how-to-conduct-a-heuristic-evaluation/)).
-- **Independent of the design (this skill)**: an evaluator gets the prototype, the job stories, the grid and the success criteria, never the design reasoning or the rejected options, so it judges what the end user will see. For an agent, that is a fresh sub-agent; two of them stand in for the independent evaluators.
+- **Independent of the design**: the evaluators are fresh sub-agents that never see the design reasoning or the rejected options. See « Two looks, the blind one first » for what each one receives.
 - **Severity** ([how to rate the severity](https://www.nngroup.com/articles/how-to-rate-the-severity-of-usability-problems/)), judged on frequency, impact and persistence (plus market impact):
 
   | Rating | Meaning |
@@ -37,16 +38,31 @@ This skill keeps **counts in two columns, not times** (this skill):
   Each evaluator rates independently. The **mean** of several evaluators' ratings is « satisfactory for many practical purposes »; a single evaluator's ratings are « too unreliable to be trusted ». With one evaluator, say so next to the ratings.
 - **Success criteria as heuristics (this skill)**: each success criterion of `ux.md` is checked like one more heuristic, with the check `ux.md` gives for it.
 
+## Two looks, the blind one first
+
+A heuristic evaluation and a cognitive walkthrough need opposite inputs (this skill, from the two methods below):
+
+- the **blind evaluator** gets no action sequence. It runs the heuristics, the success criteria, the accessibility check, and a free attempt at each job story, as a newcomer would;
+- the **sequence evaluator** gets the action sequence of each job story (the steps and the expected actions, without the reasons for them) and runs the cognitive walkthrough, which is defined on that sequence.
+
+An evaluator who knows the expected path stops seeing what a newcomer sees, and an answer once known cannot be forgotten. So with a single sub-agent, the order is fixed: the blind look first, its findings handed back, then the sequence for the walkthrough. Neither evaluator ever gets the design reasoning or the rejected options.
+
+A blind agent still is no end user: it reads the whole page source, closed menus and off-screen labels included, so its success proves little about how easy the interface is to learn. That proof is the user test, where the participant never gets the sequence.
+
 ## Cognitive walkthrough
 
-An inspection of a journey without users, step by step through a task, asking four questions at each step ([nngroup.com/articles/cognitive-walkthroughs](https://www.nngroup.com/articles/cognitive-walkthroughs/); Lewis, Polson, Wharton & Rieman, CHI 1990; Wharton, Rieman, Lewis & Polson, « The Cognitive Walkthrough Method: A Practitioner's Guide », in Nielsen & Mack (eds.), *Usability Inspection Methods*, 1994):
+An inspection of learnability without users, along the correct path of each task (Wharton, Rieman, Lewis & Polson, « The Cognitive Walkthrough Method: A Practitioner's Guide », in Nielsen & Mack (eds.), *Usability Inspection Methods*, Wiley, 1994; [nngroup.com/articles/cognitive-walkthroughs](https://www.nngroup.com/articles/cognitive-walkthroughs/)). Its inputs, as Spencer restates Wharton et al.: the users, sample tasks, « action sequences for completing the tasks », and the interface. At each step of the sequence, the evaluator tries to tell a credible story for each of four questions:
 
 1. Will users try to achieve the right result?
 2. Will users notice that the correct action is available?
 3. Will users associate the correct action with the result they're trying to achieve?
 4. After the action is performed, will users see that progress is made toward the goal?
 
-A « no » is a finding, rated on the severity scale. This skill runs it on every job story before the user test, so the end user meets a prototype without the obvious blocks.
+Where no plausible story can be told, Wharton et al. record that it could not, and Spencer records « the failure and the knowledge that the user will need ». Spencer's streamlined version (R. Spencer, « The Streamlined Cognitive Walkthrough Method, Working Around Social Constraints Encountered in a Software Development Company », CHI 2000, pp. 353–359, [doi:10.1145/332040.332456](https://doi.org/10.1145/332040.332456)) collapses questions 1 to 3 into « Will the user know what to do at this step? »; this skill keeps the four, which point at the cause of a problem. It keeps Spencer's ground rules, written against design defensiveness: no designing, no defending a design, no debating cognitive theory. A design idea is noted in one line and the walkthrough moves on.
+
+**Evidence for every yes (this skill)**: the story behind a « yes » names what is visible at that step: a label, a position, a state, the feedback shown. A « yes » with no visible evidence is a finding. An evaluator that knows the task answers yes too easily; tying the story to the screen is the guard.
+
+A failed step is a finding, rated on the severity scale. This skill runs the walkthrough on every job story before the user test, so the end user meets a prototype without the obvious blocks.
 
 ## Accessibility check
 
@@ -68,6 +84,17 @@ The target is **WCAG 2.2, level AA** unless `ux.md` sets another ([w3.org/TR/WCA
 
 Usage contexts in `ux.md` may set larger targets (touch use often does); the larger value wins.
 
+Each criterion ends with one of three outcomes: **met**, **finding** (with a severity), or **not judged on this prototype**, with the reason. A criterion not judged is carried into the acceptance criteria or the architecture's agent notes, to be checked in the app. An empty verdict is better than a guessed one (this skill).
+
+**Contrast is computed, never estimated by eye**, from the colour values in the tokens or the prototype's CSS. WCAG defines the [contrast ratio](https://www.w3.org/TR/WCAG22/#dfn-contrast-ratio) as (L1 + 0.05) / (L2 + 0.05), L1 being the lighter colour's [relative luminance](https://www.w3.org/TR/WCAG22/#dfn-relative-luminance): L = 0.2126 R + 0.7152 G + 0.0722 B, where each channel is c / 255, linearised as c / 12.92 when it is at most 0.04045, ((c + 0.055) / 1.055) ^ 2.4 otherwise.
+
+## How the evaluator sees the prototype
+
+What an evaluator can judge depends on its tools; the review says which it had (this skill):
+
+- **With a browser tool** (the agent's own, Playwright, Chrome DevTools…): open the prototype, take screenshots at each width of the usage contexts in `ux.md`, a phone's included, go through each journey with the keyboard alone, and measure the rendered targets.
+- **Without one**: read the HTML and the CSS, judge what follows from them (labels, colours, declared sizes, source order), and mark the rest « not judged on this prototype »: focus visibility and occlusion, keyboard order as rendered, rendered target sizes.
+
 ## User test measures
 
 The test follows Steve Krug's lightweight protocol (*Rocket Surgery Made Easy*, 2010) with thinking aloud: participants use the system « while continuously thinking out loud », and the facilitator lets them talk, since prompts « can very easily change user behavior » ([thinking aloud](https://www.nngroup.com/articles/thinking-aloud-the-1-usability-tool/)). It records three light measures, in line with the effectiveness, efficiency and satisfaction of ISO 9241-11:2018 (*Ergonomics of human-system interaction — Usability: Definitions and concepts*):
@@ -78,7 +105,7 @@ The test follows Steve Krug's lightweight protocol (*Rocket Surgery Made Easy*, 
 
 The **System Usability Scale** (SUS; ten items, after the whole test) measures perceived ease of the whole system and « was not intended to diagnose usability problems » ([measuringu.com/sus](https://measuringu.com/sus/)). It is left out by default; use it to compare rounds when `ux.md` declares several participants per round.
 
-**Participants**: « testing no more than 5 users and running as many small tests as you can afford », for comparable users; with distinct user groups, three or four per group ([why you only need to test with 5 users](https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/), Nielsen, 2000). When the product has only one or two end users, test with them and run more short rounds.
+**Participants**: « testing no more than 5 users and running as many small tests as you can afford », for comparable users; with distinct user groups, three or four per group ([why you only need to test with 5 users](https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/), Nielsen, 2000). Krug sets the rhythm rather than the size: « A morning a month, that's all we ask » (chapter 3). When the product has only one or two end users, test with them and run more short rounds.
 
 ## Acceptance criteria: Given / When / Then
 
