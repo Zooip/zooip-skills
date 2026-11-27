@@ -1,5 +1,5 @@
 interface:
   display_name: "Preliminary Study"
-  short_description: "Phase 1: what the code does today"
+  short_description: "Phase 1: today's code and prior art"
 policy:
   allow_implicit_invocation: false

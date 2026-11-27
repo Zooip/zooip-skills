@@ -18,7 +18,7 @@ Take a project from a loose need to tickets an agent can grab, in five phases. E
 | -- | -- |
 | [`/setup-pre-project`](plugins/pre-project/skills/setup-pre-project/SKILL.md) | Run once per repo: what a project is in your tools, where phase documents live, their language, the triage labels, the end users and the design system |
 | [`/pre-project <project>`](plugins/pre-project/skills/pre-project/SKILL.md) | Entry point: finds the current phase of a project and names the next skill |
-| [`/preliminary-study`](plugins/pre-project/skills/preliminary-study/SKILL.md) | Phase 1: what the code does today, blockers, traps, the questions the spec leaves open |
+| [`/preliminary-study`](plugins/pre-project/skills/preliminary-study/SKILL.md) | Phase 1: what the code does today, the state of the art outside it, blockers, traps, the questions the spec leaves open |
 | [`/exploration`](plugins/pre-project/skills/exploration/SKILL.md) | Phase 2: widen the field of solutions, then converge through a visual grilling session |
 | [`/ux-design`](plugins/pre-project/skills/ux-design/SKILL.md) | Phase 3: job stories, friction budget, low-fidelity options, a clickable prototype, an independent review (cognitive walkthrough, heuristics, WCAG 2.2) and a test with a real end user, distilled into Given/When/Then acceptance criteria. A short path for small interfaces; skipped when there is none |
 | [`/architecture`](plugins/pre-project/skills/architecture/SKILL.md) | Phase 4: modules, interfaces, stable technical names, blast radius, for peer review |
